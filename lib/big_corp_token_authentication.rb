@@ -23,7 +23,7 @@ class BigCorpTokenAuthentication
     true
 
     # and a user_id is returned
-    @env[:user_id] = 1234
+    @env[:user_id] = user_id_from_token(bearer)
   end
 
   def bearer
@@ -37,5 +37,14 @@ class BigCorpTokenAuthentication
     else
       nil
     end
+  end
+
+  # For Demo Purposes Only - Token format: TOKEN0000 (e.g. TOKEN12; TOKEN4321; TOKEN00001)
+  def user_id_from_token(bearer)
+    user_id = bearer.sub('TOKEN', '').to_i
+    if user_id == 0
+      user_id = 1234
+    end
+    user_id
   end
 end
