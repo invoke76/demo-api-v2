@@ -582,7 +582,7 @@ $ git commit -m 'Deploying to Heroku'</pre></div>
     true
 
     # and a user_id is returned
-    @env[:user_id] = 1234
+    @env[:user_id] = user_id_from_token(bearer)
   end
 
   def bearer
@@ -597,6 +597,15 @@ $ git commit -m 'Deploying to Heroku'</pre></div>
       nil
     end
   end
+
+  # For Demo Purposes Only - Token format: TOKEN0000 (e.g. TOKEN12; TOKEN4321; TOKEN00001)
+  def user_id_from_token(bearer)
+    user_id = bearer.sub('TOKEN', '').to_i
+    if user_id == 0
+      user_id = 1234
+    end
+    user_id
+  end
 end</pre></div>
 </div>
 
@@ -606,7 +615,7 @@ end</pre></div>
   <div class="code"><pre>require_relative '../lib/big_corp_token_authentication'
 
 module DemoApiV2
-  class Application < Rails::Application
+  class Application &lt; Rails::Application
     config.middleware.use ::BigCorpTokenAuthentication
   end
 end</pre></div>
@@ -614,28 +623,32 @@ end</pre></div>
 
 <h2 id="testing-using-authorization-token-using-curl">Testing using authorization token using curl</h2>
 
+<p>In the below curl requests replace the <code>&lt;token&gt;</code> string with a string of the format <code>TOKEN0000</code> where <code>0000</code> can be any integer great than 0 and less than 1000000. This will allow you to fake the <code>user_id</code> for testing.</p>
+
+<p>If you don't replace the <code>&lt;token&gt;</code> string the <code>user_id</code> will be defaulted to <code>1234</code>.</p>
+
 <h3>Creating a new review</h3>
 
 <div class="CodeRay">
-  <div class="code"><pre>curl -X POST -H "Cache-Control:no-cache" -H "Authorization: Bearer <token>" -F "title=My review" -F "body=This is my review. It was great." -F "rating=5" https://demo-api-v2.herokuapp.com/api/v1/reviews</pre></div>
+  <div class="code"><pre>curl -X POST -H "Cache-Control:no-cache" -H "Authorization: Bearer &lt;token&gt;" -F "title=My review" -F "body=This is my review. It was great." -F "rating=5" https://demo-api-v2.herokuapp.com/api/v1/reviews</pre></div>
 </div>
 
 <h3>Get all reviews</h3>
 
 <div class="CodeRay">
-  <div class="code"><pre>curl -X GET -H "Cache-Control:no-cache" -H "Authorization: Bearer <token>" https://demo-api-v2.herokuapp.com/api/v1/reviews</pre></div>
+  <div class="code"><pre>curl -X GET -H "Cache-Control:no-cache" -H "Authorization: Bearer &lt;token&gt;" https://demo-api-v2.herokuapp.com/api/v1/reviews</pre></div>
 </div>
 
 <h3>Get specific review</h3>
 
 <div class="CodeRay">
-  <div class="code"><pre>curl -X GET -H "Cache-Control:no-cache" -H "Authorization: Bearer <token>" https://demo-api-v2.herokuapp.com/api/v1/reviews/1</pre></div>
+  <div class="code"><pre>curl -X GET -H "Cache-Control:no-cache" -H "Authorization: Bearer &lt;token&gt;" https://demo-api-v2.herokuapp.com/api/v1/reviews/1</pre></div>
 </div>
 
 <h3>Delete review</h3>
 
 <div class="CodeRay">
-  <div class="code"><pre>curl -X DELETE -H "Cache-Control:no-cache" -H "Authorization: Bearer <token>" https://demo-api-v2.herokuapp.com/api/v1/reviews/1</pre></div>
+  <div class="code"><pre>curl -X DELETE -H "Cache-Control:no-cache" -H "Authorization: Bearer &lt;token&gt;" https://demo-api-v2.herokuapp.com/api/v1/reviews/1</pre></div>
 </div>
 
       <section class="article-extras">
@@ -665,30 +678,13 @@ end</pre></div>
 </div>
 
 
-        <div class="nocontent">
-  <section class="js-article-feedback article-feedback secondary-article-section">
-    <div class="step1">
-      <h2 id="feedback"><a href="#feedback">Feedback</a></h2>
-
-      <p>
-        <a href="https://devcenter.heroku.com/login?back_to=%2Farticles%2Frails4&amp;utm_campaign=login&amp;utm_medium=feedback&amp;utm_source=web">Log in to submit feedback</a>.
-      </p>
-    </div>
-    <p class="step3">
-      Your feedback has been sent to the <a href="mailto:devcenter-feedback@heroku.com">Dev Center</a> team. Thank you.
-    </p>
-  </section>
-</div>
 
       </section>
 
     </div>
   </article>
 
-  <section class="nocontent" id="pagination">
-  <a href="https://devcenter.heroku.com/articles/rails-4-asset-pipeline" id="previous" rel="prev">« Rails 4 Asset Pipeline on Heroku</a>
-  <a href="https://devcenter.heroku.com/articles/rails-asset-pipeline" id="next" rel="next">Rails Asset Pipeline on Heroku Cedar »</a>
-</section>
+  
 </section>
 
 
@@ -706,69 +702,12 @@ end</pre></div>
       </div>
     </div>
 
-      <!-- Google Tag Manager -->
-  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-JD26" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-JD26');</script>
-  <!-- End Google Tag Manager -->
-
 <script src="/assets/public-7c9cd70e3c9868dc98c38bc6db98979f.js" type="text/javascript"></script>
 
 <!--[if lt IE 9]>
 <script src="/assets/public/vendor/selectivizr-1.0.min-e12aff0870999e4ee41b32e5aa7dc15d.js" type="text/javascript"></script>
 <![endif]-->
 
-<script>
-  
-$( function() {
-  setAccordion(0);
-
-  var $feedback = $('.js-article-feedback'),
-      $step1 = $feedback.find('.step1'),
-      $openStep2 = $step1.find('.open'),
-      $step2 = $feedback.find('.step2'),
-      $step3 = $feedback.find('.step3');
-
-  var openFeedback = function() {
-    $openStep2.replaceWith($openStep2.text())
-    $step2.fadeIn(10, function(){
-      if (!iPhone && !iPad){
-        $('html, body').animate({scrollTop:$(document).height()}, 1500);
-      }
-    }).find('textarea').focus();
-  }
-
-  $openStep2.click( function(e){
-    e.preventDefault()
-    if (! $step2.is(':visible')) openFeedback() // already open in small screens
-  })
-
-  $step2.submit( function(e){
-    e.preventDefault();
-    $step2.find('input[type="submit"]').attr('disabled', true).val('Sending');
-    $.post( $step2.attr('action'), $step2.serialize(),
-      function(data){
-        $step1.fadeOut(10);
-        $step1.find('textarea').val('');
-        $step3.fadeIn(10);
-      }
-    )
-  })
-
-  $('.js-article-feedback textarea').autosize()
-
-  if (document.location.href.indexOf('#feedback') != -1) {
-    openFeedback()
-  }
-});
-
-</script>
-<script>
-  
-</script>
 
   </body>
 </html>
