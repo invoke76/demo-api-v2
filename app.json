@@ -1,7 +1,7 @@
 {
     "name": "Simple API Demo",
     "website": "http://heroku.com",
-    "repository": "https://github.com/invoke76/demo_api_v2",
+    "repository": "https://github.com/invoke76/demo-api-v2",
     "scripts": {
         "postdeploy": "bundle exec rake db:setup"
     }
