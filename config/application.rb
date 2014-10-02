@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+
 require_relative '../lib/big_corp_token_authentication'
 
 # Require the gems listed in Gemfile, including any gems
