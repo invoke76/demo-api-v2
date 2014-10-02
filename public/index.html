@@ -483,6 +483,12 @@ gem 'unicorn'</pre></div>
 
 <p>For security reasons you should run your API over SSL. In testing you can call a herokuapp.com domain name over SSL. When you want to start using your own domain name then you will need to install the <a href="https://addons.heroku.com/ssl">SSL add-on for Heroku</a>.</p>
 
+<p>To force SSL in your application on Heroku uncomment the following line in your <code>config/environments/production.rb</code> file:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>  config.force_ssl = true</pre></div>
+</div>
+
 <h2 id="deploying-to-heroku">Deploying to Heroku</h2>
 
 <p>Make sure all of your files are in git before deploying to Heroku:</p>
