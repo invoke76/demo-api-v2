@@ -6,6 +6,7 @@
 
 ## Testing using authorization token
 
+Make sure to update the URL path to point to your URL.
 
 ### Creating a new review
 
