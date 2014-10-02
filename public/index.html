@@ -301,8 +301,6 @@
 
 <p>You can read more about rails-api at the <a href="https://github.com/rails-api/rails-api">rails-api documentation</a></p>
 
-<p>Don’t forget to call <code>bundle install</code> in your project directory to ensure you have all the required gems.</p>
-
 <h2 id="middlewares">Middlewares</h2>
 
 <p><code>rails-api</code> comes with a number of middlewares enabled by default. You can find more information about enabling / disabling them at the rails-api documentation.</p>
@@ -374,24 +372,24 @@ end
 <p>Start the rails server to test your API:</p>
 
 <div class="CodeRay">
-  <div class="code"><pre>rails server</pre></div>
+  <div class="code"><pre>foreman start</pre></div>
 </div>
 
 <p>You will now be able to create new reviews using the following curl command:</p>
 
 <div class="CodeRay">
-  <div class="code"><pre>curl -X POST -H "Cache-Control:no-cache" -F "title=My review" -F "body=This is my review. It was great." -F "rating=5" http://localhost:3000/api/v1/reviews</pre></div>
+  <div class="code"><pre>curl -X POST -H "Cache-Control:no-cache" -F "title=My review" -F "body=This is my review. It was great." -F "rating=5" http://localhost:5000/api/v1/reviews</pre></div>
 </div>
 
 <p>and get all reviews:</p>
 
 <div class="CodeRay">
-  <div class="code"><pre>curl -X GET -H "Cache-Control:no-cache" http://localhost:3000/api/v1/reviews</pre></div>
+  <div class="code"><pre>curl -X GET -H "Cache-Control:no-cache" http://localhost:5000/api/v1/reviews</pre></div>
 </div>
 
 <h3>API versioning using HTTP headers</h3>
 
-<p><em>If I was writing a full blown article I would add detail about using HTTP headers to define API version and how to default http://localhost:3000/api/reviews to the latest version of the API.</em></p>
+<p><em>If I was writing a full blown article I would add detail about using HTTP headers to define API version and how to default http://localhost:5000/api/reviews to the latest version of the API.</em></p>
 
 <h2 id="specific-heroku-setup">Specific Heroku setup</h2>
 
